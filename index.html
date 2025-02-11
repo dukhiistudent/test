@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scattering Text Effect</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+            font-family: serif;
+            overflow: hidden;
+        }
+        .container {
+            position: relative;
+            font-size: 48px;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+        }
+        .letter {
+            position: relative;
+            transition: transform 0.2s ease-out;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="letter">B</span>
+        <span class="letter">o</span>
+        <span class="letter">d</span>
+        <span class="letter">y</span>
+    </div>
+
+    <script>
+        document.addEventListener("mousemove", (e) => {
+            document.querySelectorAll(".letter").forEach(letter => {
+                const rect = letter.getBoundingClientRect();
+                const letterX = rect.left + rect.width / 2;
+                const letterY = rect.top + rect.height / 2;
+                
+                const dx = letterX - e.clientX;
+                const dy = letterY - e.clientY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                const maxDist = 100;
+                if (distance < maxDist) {
+                    const angle = Math.atan2(dy, dx);
+                    const moveX = Math.cos(angle) * (maxDist - distance);
+                    const moveY = Math.sin(angle) * (maxDist - distance);
+                    
+                    letter.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                } else {
+                    letter.style.transform = "translate(0, 0)";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
