@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Image Links</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: transparent;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            gap: 40px; /* Increased gap between images */
+            animation: scrollX 20s linear infinite;
+            position: relative;
+        }
+
+        .image-wrapper {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border-radius: 50%;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .image-wrapper:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes scrollX {
+            0% {
+                transform: translateX(100vw);
+            }
+            100% {
+                transform: translateX(-100vw);
+            }
+        }
+
+        .fade-overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100px;
+            background: linear-gradient(to right, transparent 0%, transparent 100%);
+            z-index: 1;
+        }
+
+        .fade-overlay.left {
+            left: 0;
+        }
+
+        .fade-overlay.right {
+            right: 0;
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="fade-overlay left"></div>
+    <div class="container" id="imageContainer">
+        <a class="image-wrapper" href="https://www.youtube.com/@jordanfranklinbrand" target="_blank">
+            <img src="https://yt3.googleusercontent.com/U1-xNUTo0WWeFq9SgVKMpI1MtsU2gePfzJn6K8bnndIfyNHRVymPO7BtJnXmbKuI3xuCbo_0=s160-c-k-c0x00ffffff-no-rj" alt="Jordan Franklin">
+        </a>
+        <a class="image-wrapper" href="https://www.youtube.com/@tomgillbanks/videos" target="_blank">
+            <img src="https://yt3.googleusercontent.com/1A9aQTn5u_3xB8tPOX3cihfzzSNX3gl9l-hx0G3rNR9cPhnWyHrfKsVutQO7IO3TkPniStACpfc=s160-c-k-c0x00ffffff-no-rj" alt="Tom Gillbanks">
+        </a>
+    </div>
+    <div class="fade-overlay right"></div>
+
+    <script>
+        const container = document.getElementById('imageContainer');
+
+        // Pause animation on hover
+        container.addEventListener('mouseenter', () => {
+            container.style.animationPlayState = 'paused';
+        });
+
+        // Resume animation when not hovering
+        container.addEventListener('mouseleave', () => {
+            container.style.animationPlayState = 'running';
+        });
+    </script>
+</body>
+</html>
